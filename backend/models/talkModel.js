@@ -21,7 +21,6 @@ const talkSchema = mongoose.Schema(
     attendees: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
         ref: "User",
       },
     ],

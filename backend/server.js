@@ -2,6 +2,8 @@ import express from "express";
 import colors from "colors";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
+import userRoutes from "./routes/userRoutes.js";
+import talkRoutes from "./routes/talkRoutes.js";
 
 dotenv.config();
 connectDB();
@@ -15,6 +17,8 @@ app.get("/talks", (req, res) => {
 });
 
 app.use(express.json());
+app.use("api/users", userRoutes);
+app.use("api/talks", talkRoutes);
 
 const PORT = process.env.PORT || 5000;
 
