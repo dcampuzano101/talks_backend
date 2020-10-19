@@ -1,18 +1,21 @@
 import Talk from "../models/talkModel.js";
-
+import User from "../models/userModel.js";
+import asyncHandler from "express-async-handler";
+import mongoose from "mongoose";
 // Description: Creates a new talk
 // Route: POST /api/talks
 // Access: Private (update to create protected route // authMiddleware)
 
-const createTalk = async (req, res) => {
+const createTalk = asyncHandler(async (req, res) => {
   const { name, location, startTime, endTime } = req.body;
 
-  const conflictingTalk = await Talk.findOne({ location, startTime, endTime });
+  //CONSULT MIKE ABOUT ITERATING THROUGH AND CHECKING FOR startTime <= prev.endTime
+  // const conflictingTalk = await Talk.findOne({ location, startTime, endTime });
 
-  if (conflictingTalk) {
-    res.status(400);
-    throw new Error("Conflicting Talk: Location already booked");
-  }
+  // if (conflictingTalk) {
+  //   res.status(400);
+  //   throw new Error("Conflicting Talk: Location already booked");
+  // }
 
   const talk = await Talk.create({
     name,
@@ -33,4 +36,60 @@ const createTalk = async (req, res) => {
     res.status(400);
     throw new Error("Invalid talk data");
   }
-};
+});
+
+const addAttendee = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  const talk = await Talk.findById(id);
+
+  const user = await User.findById(req.body.userId);
+
+  if (talk && user) {
+    // const userId = mongoose.Types.ObjectId(user._id);
+    // console.log(mongoose.Types.ObjectId.isValid(user._id));
+    talk.attendees.push(user._id);
+
+    const updatedTalk = await talk.save();
+
+    res.json({
+      _id: updatedTalk._id,
+      name: updatedTalk.name,
+      location: updatedTalk.location,
+      startTime: updatedTalk.startTime,
+      endTime: updatedTalk.endTime,
+      attendees: updatedTalk.attendees,
+    });
+  } else {
+    res.status(404);
+    throw new Error("Talk or User not found");
+  }
+});
+
+const removeAttendee = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  const talk = await Talk.findById(id);
+
+  const user = await User.findById(req.body.userId);
+
+  if (talk && user) {
+    const updatedAttendees = talk.attendees.filter((attendee) => {
+      return JSON.stringify(user._id) !== JSON.stringify(attendee._id);
+    });
+    talk.attendees = updatedAttendees;
+    const updatedTalk = await talk.save();
+
+    res.json({
+      _id: updatedTalk._id,
+      name: updatedTalk.name,
+      location: updatedTalk.location,
+      startTime: updatedTalk.startTime,
+      endTime: updatedTalk.endTime,
+      attendees: updatedTalk.attendees,
+    });
+  } else {
+    res.status(404);
+    throw new Error("Talk or User not found");
+  }
+});
+
+export { createTalk, addAttendee, removeAttendee };

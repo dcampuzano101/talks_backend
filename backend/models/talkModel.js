@@ -29,3 +29,4 @@ const talkSchema = mongoose.Schema(
 );
 
 const Talk = mongoose.model("Talk", talkSchema);
+export default Talk;
