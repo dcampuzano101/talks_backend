@@ -1,10 +1,10 @@
 import Talk from "../models/talkModel.js";
 import User from "../models/userModel.js";
 import asyncHandler from "express-async-handler";
-import mongoose from "mongoose";
-// Description: Creates a new talk
-// Route: POST /api/talks
-// Access: Private (update to create protected route // authMiddleware)
+
+// @Description: Creates a new talk
+// @Route: POST /api/talks
+// @Access: Private (update to create protected route // authMiddleware)
 
 const createTalk = asyncHandler(async (req, res) => {
   const { name, location, startTime, endTime } = req.body;
@@ -38,6 +38,10 @@ const createTalk = asyncHandler(async (req, res) => {
   }
 });
 
+// @Description: Add attendee to talk
+// @Route: PUT /api/talks/:id
+// @Access: Private (update to create protected route // authMiddleware)
+
 const addAttendee = asyncHandler(async (req, res) => {
   const id = req.params.id;
   const talk = await Talk.findById(id);
@@ -45,10 +49,7 @@ const addAttendee = asyncHandler(async (req, res) => {
   const user = await User.findById(req.body.userId);
 
   if (talk && user) {
-    // const userId = mongoose.Types.ObjectId(user._id);
-    // console.log(mongoose.Types.ObjectId.isValid(user._id));
     talk.attendees.push(user._id);
-
     const updatedTalk = await talk.save();
 
     res.json({
@@ -64,6 +65,10 @@ const addAttendee = asyncHandler(async (req, res) => {
     throw new Error("Talk or User not found");
   }
 });
+
+// @Description: Remove attendee from talk
+// @Route: PUT /api/talks/:id/remove_attendee
+// @Access: Private (update to create protected route // authMiddleware)
 
 const removeAttendee = asyncHandler(async (req, res) => {
   const id = req.params.id;

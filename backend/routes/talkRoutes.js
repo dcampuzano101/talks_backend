@@ -4,10 +4,11 @@ import {
   addAttendee,
   removeAttendee,
 } from "../controllers/talkController.js";
+import { protect } from "../middleware/authMiddleware.js";
 const router = express.Router();
 
-router.route("/").post(createTalk);
-router.route("/:id").put(addAttendee);
-router.route("/:id").patch(removeAttendee);
+router.route("/").post(protect, createTalk);
+router.route("/:id").put(protect, addAttendee);
+router.route("/:id/remove_attendee").put(protect, removeAttendee);
 
 export default router;
