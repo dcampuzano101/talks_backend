@@ -1,15 +1,36 @@
-# riiid - restful-api
+# riiid - restful-api - Node.js/Express.js backend
+
+## Dependencies:
+* jsonwebtoken: allows us to sign and verify our Authorization tokens
+* bcryptjs: encrypts/hashes our passwords so we can safely store in DB
+* express.js: server framework to build out our api
+* express-async-handler: passes exceptions to our custom error handlers
+* colors: emphasizes console logs
+* dotenv: configures out environment variables
+</hr>
 
 ## API Endpoints - 
 
 ### users
-   * POST /api/users - creates user/attendee
-   * POST /api/users/login - authenticates user against database and authorizes user
+| HTTP method   | path      	     | description              |  access  |
+|---------------|------------------|--------------------------|----------|
+| POST          | /api/users 	     | creates user/attendee    | public   |
+| POST          | /api/users/login | authorizes/authenticates | public   |
+
+* POST /api/users - creates user/attendee
+* POST /api/users/login - authenticates user against database and authorizes user
   
 ### talks
-   * POST /api/talks - creates talk
-   * PUT /api/talks/:talkId/add_attendee - adds attendee to talk
-   * PUT /api/talks/:talkId/remove_attendee - removes attendee from talk
+
+| HTTP method   | path      	                       | description                |  access  |
+|---------------|------------------------------------|----------------------------|----------|
+| POST          | /api/talks 	                       | creates talk               | private  |
+| PUT           | /api/talks/:talkId/add_attendee    | adds attendee to talk      | private  |
+| PUT           | /api/talks/:talkId/remove_attendee | removes attendee from talk | private  |
+
+* POST /api/talks - creates talk
+* PUT /api/talks/:talkId/add_attendee - adds attendee to talk
+* PUT /api/talks/:talkId/remove_attendee - removes attendee from talk
    
 ### Users
 | column name   | data type 	| details        |
