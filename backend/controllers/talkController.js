@@ -39,7 +39,7 @@ const createTalk = asyncHandler(async (req, res) => {
 });
 
 // @Description: Add attendee to talk
-// @Route: PUT /api/talks/:id
+// @Route: PUT /api/talks/:id/add_attendee
 // @Access: Private (update to create protected route // authMiddleware)
 
 const addAttendee = asyncHandler(async (req, res) => {
@@ -47,8 +47,17 @@ const addAttendee = asyncHandler(async (req, res) => {
   const talk = await Talk.findById(id);
 
   const user = await User.findById(req.body.userId);
-
+  console.log(user);
   if (talk && user) {
+    for (let i = 0; i < talk.attendees.length; i++) {
+      let attendee = JSON.stringify(talk.attendees[i]._id);
+      let currentUser = JSON.stringify(user._id);
+      if (currentUser === attendee) {
+        res.status(400);
+        throw new Error("User already attending");
+      }
+    }
+
     talk.attendees.push(user._id);
     const updatedTalk = await talk.save();
 
