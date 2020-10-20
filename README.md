@@ -1,9 +1,10 @@
 # riiid - restful-api - Node.js/Express.js backend
 
 ## Dependencies:
+* express.js: server framework to build out our api
+* mongoose: handles our schema and models, as well as queries to DB
 * jsonwebtoken: allows us to sign and verify our Authorization tokens
 * bcryptjs: encrypts/hashes our passwords so we can safely store in DB
-* express.js: server framework to build out our api
 * express-async-handler: passes exceptions to our custom error handlers
 * colors: emphasizes console logs
 * dotenv: configures out environment variables
