@@ -12,16 +12,18 @@
    * PUT /api/talks/:talkId/remove_attendee - removes attendee from talk
    
 ### Users
-| column name   | data type 	| details   |
-|---------------|-------------|-----------|
-| name          | string    	| required  |
-| email         | string    	| required  |
-| password      | string      | required  | 
+| column name   | data type 	| details        |
+|---------------|-------------|----------------|
+| name          | String    	| required       |
+| email         | String    	| required       |
+| password      | String      | required       |
+| isAdmin       | Boolean     | default: false |
 
 ### Talks
 | column name  	| data type 	| details   |
 |---------------|-------------|-----------|
-| name         	| string    	| required  |
-| location      | string    	| required  |
-| startTime     | string      | required  |
-| endTime       | string      | required  |
+| name         	| String    	| required  |
+| location      | String    	| required  |
+| startTime     | String      | required  |
+| endTime       | String      | required  |
+| attendees     | Array       | required  |
