@@ -8,7 +8,7 @@
   
 ### talks
    * POST /api/talks - creates talk
-   * PUT /api/talks/:talkId - adds attendee to talk
+   * PUT /api/talks/:talkId/add_attendee - adds attendee to talk
    * PUT /api/talks/:talkId/remove_attendee - removes attendee from talk
    
 ### Users
