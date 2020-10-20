@@ -20,10 +20,10 @@
 | isAdmin       | Boolean     | default: false |
 
 ### Talks
-| column name  	| data type 	| details   |
-|---------------|-------------|-----------|
-| name         	| String    	| required  |
-| location      | String    	| required  |
-| startTime     | String      | required  |
-| endTime       | String      | required  |
-| attendees     | Array       | required  |
+| column name  	| data type 	| details      |
+|---------------|-------------|--------------|
+| name         	| String    	| required     |
+| location      | String    	| required     |
+| startTime     | String      | required     |
+| endTime       | String      | required     |
+| attendees     | Array       | default: []  |
