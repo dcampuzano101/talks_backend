@@ -1,4 +1,4 @@
-# riiid - restful-api - Node.js/Express.js backend
+# restful-api - Node.js/Express.js backend
 
 ## Dependencies:
 * express.js: server framework to build out our api
